@@ -7,7 +7,6 @@ const MAIL_CONFIG = {
     mailSendLink: 'smtp.yandex.ru',
     mailHostLink: 'imap.yandex.ru',
     mailHost: 'hardevil35@gmail.com ',
-    allowedLink: 'hardevil35@gmail.com',
     mailSendPassword: 'kbgpsbsdhhdqlnwr'
 }
 

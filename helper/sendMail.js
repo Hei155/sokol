@@ -10,8 +10,8 @@ const { mailSend,
         mailSendLink,
         mailHostLink,
         mailHost, 
-        allowedLink,
-        mailSendPassword} = MAIL_CONFIG;
+        mailSendPassword
+      } = MAIL_CONFIG;
 
 module.exports = (body) => {
     const dirPath = path.join(__dirname, `../requestsBuffer/${currentDate}-${body.email}.pdf`);

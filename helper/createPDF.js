@@ -2,49 +2,76 @@ const fs = require('fs');
 const PDFkit = require('pdfkit')
 const date = require('../helper/date');
 const currentDate = date.getFullDate();
-const doc = new PDFkit();
 const sendMail = require('./sendMail');
 
-module.exports = (body) => {
-    doc.pipe(fs.createWriteStream(`./requestsBuffer/${currentDate}-${body.email}.pdf`));
+async function createDoc(body) {
+    try {
+        const doc = new PDFkit();
+        doc.pipe(fs.createWriteStream(`./requestsBuffer/${currentDate}-${body.email}.pdf`));
         doc.font('./fonts/Inter-Regular.ttf');
         doc.fontSize(14);
-        doc.text('1) Услуга:', 100, 100, {
+        doc.text('1) Услуга:', {
             underline: true,
         });
-        doc.text(body.serviceType, 400, 100);
-        doc.text('2) Бюджет:', 100, 130, {
+        doc.moveDown(0.5);
+        doc.text(body.serviceType);
+        doc.moveDown(0.5);
+        doc.text('2) Бюджет:', {
             underline: true,
         });
-        doc.text(body.budget, 400, 130);
-        doc.text('3) Имя:', 100, 160, {
+        doc.moveDown(0.5);
+        doc.text(body.budget);
+        doc.moveDown(0.5);
+        doc.text('3) Имя:', {
             underline: true,
         });
-        doc.text(body.name, 400, 160);
-        doc.text('4) Email:', 100, 190, {
+        doc.moveDown(0.5);
+        doc.text(body.name);
+        doc.moveDown(0.5);
+        doc.text('4) Email:', {
             underline: true,
         });
-        doc.text(body.email, 400, 190);
-        doc.text('5) Номер телефона:', 100, 220, {
+        doc.moveDown(0.5);
+        doc.text(body.email);
+        doc.moveDown(0.5);
+        doc.text('5) Номер телефона:', {
             underline: true,
         });
-        doc.text(body.phoneNumber, 400, 220);
-        doc.text('6) Город:', 100, 250, {
+        doc.moveDown(0.5);
+        doc.text(body.phoneNumber);
+        doc.moveDown(0.5);
+        doc.text('6) Город:', {
             underline: true,
         });
-        doc.text(body.city, 400, 250);
-        doc.text('7) Откудвы вы узнали о нас?', 100, 280, {
+        doc.moveDown(0.5);
+        doc.text(body.city);
+        doc.moveDown(0.5);
+        doc.text('7) Откудвы вы узнали о нас?', {
             underline: true,
         });
-        doc.text(body.about, 400, 280);
-        doc.text('8) Задача:', 100, 310, {
+        doc.moveDown(0.5);
+        doc.text(body.about);
+        doc.moveDown(0.5);
+        doc.text('8) Задача:', {
             underline: true,
         });
-        doc.text(body.task, 100, 330);
-        doc.text('9) Когда вам перезвонить?', 100, 530, {
+        doc.moveDown(0.5);
+        doc.text(body.task);
+        doc.moveDown(0.5);
+        doc.text('9) Когда вам перезвонить?', {
             underline: true,
         });
-        doc.text(body.time, 100, 550);
+        doc.moveDown(0.5);
+        doc.text(body.time);
+        doc.moveDown(0.5);
         doc.end();
+    } catch(e) {
+        console.log(e)
+    } finally {
         sendMail(body);
+    }
+}
+
+module.exports = (body) => {
+    createDoc(body);
 }

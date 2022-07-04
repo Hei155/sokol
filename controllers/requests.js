@@ -22,7 +22,10 @@ const setRequest = (req, res, next) => {
 
 const getRequests = (req, res, next) => {
     Request.find({})
-        .then(requests => res.status(200).send(requests))
+        .then(requests => {
+            res.status(200).send(requests);
+            console.log(requests)
+        })
         .catch((e) => {
             next(e);
         })
