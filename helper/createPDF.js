@@ -6,7 +6,6 @@ const doc = new PDFkit();
 const sendMail = require('./sendMail');
 
 module.exports = (body) => {
-    console.log(body)
     doc.pipe(fs.createWriteStream(`./requestsBuffer/${currentDate}-${body.email}.pdf`));
         doc.font('./fonts/Inter-Regular.ttf');
         doc.fontSize(14);

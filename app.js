@@ -4,7 +4,6 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const routes = require('./routes/requests');
-const fileMiddleware = require('./middlewares/file');
 const errorHelper = require('./helper/error');
 
 const { PORT, MONGO_LINK, ALLOWED__LINK } = NODE_ENV === 'production' ? process.env : require('./utils/config')
