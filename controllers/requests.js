@@ -1,9 +1,8 @@
 const Request = require('../models/request');
 const createPDF = require('../helper/createPDF');
-const sendMail = require('../helper/sendMail');
+const saveFile = require('../middlewares/saveFile')
 
 const setRequest = (req, res, next) => {
-    const {task, budget, serviceType, name, email, phoneNumber, city, about, time} = req.body;
     Request.create({...req.body})
     .then((movie) => {
         res.status(200).send(movie);
@@ -24,7 +23,6 @@ const getRequests = (req, res, next) => {
     Request.find({})
         .then(requests => {
             res.status(200).send(requests);
-            console.log(requests)
         })
         .catch((e) => {
             next(e);

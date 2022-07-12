@@ -3,7 +3,9 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
-const routes = require('./routes/requests');
+const requests = require('./routes/requests');
+const admin = require('./routes/admin');
+const params = require('./routes/params');
 const errorHelper = require('./helper/error');
 
 const { PORT, MONGO_LINK, ALLOWED__LINK } = NODE_ENV === 'production' ? process.env : require('./utils/config')
@@ -23,18 +25,12 @@ async function start() {
 
 app.use(express.json({ extended: true }));
 
-app.use('*', cors({
-  origin: [
-    ALLOWED__LINK,
-  ],
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization', 'Accept'],
-  optionsSuccessStatus: 204,
-  preflightContinue: false,
-  credentials: true,
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-}));
+app.use(cors());
 
-app.use(routes);
+app.use('/admin', admin);
+app.use(requests);
+app.use(params)
+
 
 app.use((req, res, next) => {
     const e = new Error('Маршрут не найден');
