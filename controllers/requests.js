@@ -3,13 +3,15 @@ const createPDF = require('../helper/createPDF');
 const saveFile = require('../middlewares/saveFile')
 
 const setRequest = (req, res, next) => {
-    Request.create({...req.body})
+    const data = JSON.parse(req.body.data)
+    Request.create({...data})
     .then((movie) => {
         res.status(200).send(movie);
         createPDF(req.body);
     })
     .catch((err) => {
         if (err.name === 'ValidationError') {
+            console.log(err)
             err.statusCode = 400;
             err.message = "Проверьте корректность отправляемых данных."
             next(err)
