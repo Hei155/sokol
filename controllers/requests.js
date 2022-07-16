@@ -1,12 +1,11 @@
 const Request = require('../models/request');
 const createPDF = require('../helper/createPDF');
-const saveFile = require('../middlewares/saveFile')
 
 const setRequest = (req, res, next) => {
     const data = JSON.parse(req.body.data)
     Request.create({...data})
     .then((movie) => {
-        res.status(200).send(movie);
+        res.status(200).send(movie);    
         createPDF(req.body);
     })
     .catch((err) => {

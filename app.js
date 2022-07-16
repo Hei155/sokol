@@ -23,7 +23,8 @@ async function start() {
     }
 }
 
-app.use(express.json({ extended: true }));
+app.use(express.json({ extended: true, limit: '25mb' }));
+app.use(express.urlencoded({limit: '25mb'}))
 
 app.use(cors());
 
@@ -39,5 +40,6 @@ app.use((req, res, next) => {
 });
 
 app.use(errorHelper);
+
 
 start();

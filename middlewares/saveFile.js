@@ -5,6 +5,7 @@ const storage = multer.diskStorage({
         cb(null, 'requestsBuffer/')
     },
     filename(req, file, cb) {
+        console.log(file)
         cb(null, req.body.email + '-' + file.originalname)
     }
 })
@@ -16,5 +17,6 @@ const fileFilter = (req, file, cb) => {
         cb(null, false)
     }
 }
+
 
 module.exports = multer({storage, fileFilter});
